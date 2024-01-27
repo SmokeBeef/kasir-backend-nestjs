@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum type {
+  makanan
+  minuman
+}
+
+model user {
+  id         Int      @id @default(autoincrement())
+  name       String
+  username   String   @unique
+  password   String
+  image      String   @db.Text
+  created_at DateTime @default(now())
+
+  pemesanan pemesanan[]
+}
+
+model menu {
+  id          Int     @id @default(autoincrement())
+  name        String
+  price       Int
+  description String?
+  image       String  @db.Text
+  type        type
+
+  created_at DateTime @default(now())
+
+  detail_pemesanan detail_pemesanan[]
+}
+
+model pemesanan {
+  id            Int    @id @default(autoincrement())
+  customer_name String
+  total         Int
+  user_id       Int
+  user_name     String
+  total_payment Int
+
+  created_at DateTime @default(now())
+
+  user           user               @relation(fields: [user_id], references: [id], onDelete: NoAction)
+  detailPemesanan detail_pemesanan[]
+}
+
+model detail_pemesanan {
+  id           Int    @id @default(autoincrement())
+  menu_id      Int
+  pemesanan_id Int
+  menu_name    String
+  qty          Int
+  total        Int
+
+  menu      menu      @relation(fields: [menu_id], references: [id], onDelete: NoAction)
+  pemesanan pemesanan @relation(fields: [pemesanan_id], references: [id], onDelete: Cascade)
+}
