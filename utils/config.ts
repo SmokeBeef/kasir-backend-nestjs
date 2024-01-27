@@ -9,7 +9,18 @@ export default {
     measurementId: process.env.MEASUREMENT_ID,
   },
   jwt: {
-    secretKey: '&%#*gbD&*rcH*TAc9BA(sdugA&*Sct*^AS%578yr7A%SRc7AUSc(&GVcb(ACSS',
-    expiresIn: '300s',
+    accessToken: {
+      secretKey:
+        '&%#*gbD&*rcH*TAc9BA(sdugA&*Sct*^AS%578yr7A%SRc7AUSc(&GVcb(ACSS',
+      expiresIn: '1h',
+    },
+    refreshToken: {
+      secretKey:
+        '(ASGf7b8n(ACa9hA_)Sd9UGBCSY9du0ADNU98aycn9yuHAIDUhcAIUHC*Ayd(A&cy9ycdY%^4f6%',
+      expiresIn: '7d',
+    },
+  },
+  cors: {
+    origin: [''],
   },
 };

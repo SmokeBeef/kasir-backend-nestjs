@@ -46,22 +46,25 @@ export class PemesananController {
         },
       });
 
-      if (!getMenus) {
+      if (getMenus.length < idMenus.length) {
         return wrapper.response(
           res,
           null,
-          'fail create pemesanan, menu id not found',
+          'fail create pemesanan, there is menu id not found',
           404,
         );
       }
 
-      const detailPemesanan = createPemesananDto.detailPemesanan.map(
-        (val, index) => {
-          val.menu_name = getMenus[index].name;
-          val.total = val.qty * getMenus[index].price;
-          return val;
-        },
-      );
+      const detailPemesanan = createPemesananDto.detailPemesanan.map((val) => {
+        const menu = getMenus.find((menu) => menu.id === val.menu_id);
+
+        if (menu) {
+          val.menu_name = menu.name;
+          val.total = val.qty * menu.price;
+        }
+
+        return val;
+      });
 
       createPemesananDto.detailPemesanan = detailPemesanan;
 

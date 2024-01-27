@@ -10,8 +10,8 @@ import config from 'utils/config';
     UsersModule,
     JwtModule.register({
       global: true,
-      secret: config.jwt.secretKey,
-      signOptions: { expiresIn: config.jwt.expiresIn },
+      secret: config.jwt.accessToken.secretKey,
+      signOptions: { expiresIn: config.jwt.accessToken.expiresIn },
     }),
   ],
   controllers: [AuthController],

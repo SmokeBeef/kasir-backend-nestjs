@@ -9,7 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   initializeApp(config.firebaseConfig);
   app.useGlobalPipes(new ValidationPipe());
-  app.enableCors();
+  app.enableCors({ credentials: true });
   await app.listen(port, () => console.log('app running in port ' + port));
 }
 bootstrap();

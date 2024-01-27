@@ -18,6 +18,7 @@ export class AuthController {
   async login(@Body() payload: LoginUserDto, @Res() res: Response) {
     try {
       const { username, password } = payload;
+
       const findUser = await this.userService.findByUsername(username);
       if (!findUser) {
         return wrapper.response(
@@ -47,11 +48,16 @@ export class AuthController {
         ttl: new Date().getTime(),
       };
       const token = await this.jwtService.signAsync(tokenPayload, {
-        secret: config.jwt.secretKey,
-        expiresIn: config.jwt.expiresIn,
+        secret: config.jwt.accessToken.secretKey,
+        expiresIn: config.jwt.accessToken.expiresIn,
       });
 
-      return wrapper.response(res, { token }, 'Success Login', 200);
+      return wrapper.response(
+        res,
+        { token, ...findUser },
+        'Success Login',
+        200,
+      );
     } catch (error) {
       console.log(error);
 
