@@ -3,9 +3,9 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
 import { LoginUserDto } from './dto/login-user';
-import wrapper from 'utils/wrapper';
+import wrapper from 'src/utils/wrapper';
 import * as bcrypt from 'bcrypt';
-import config from 'utils/config';
+import config from 'src/utils/config';
 
 @Controller('auth')
 export class AuthController {

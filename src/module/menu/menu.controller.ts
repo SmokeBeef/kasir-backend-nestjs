@@ -15,10 +15,10 @@ import { MenuService } from './menu.service';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
 import { Request, Response } from 'express';
-import wrapper from 'utils/wrapper';
+import wrapper from 'src/utils/wrapper';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { deleteImageMenu, uploadImageMenu } from 'utils/upload';
-import { calcTakeSkip, isNumeric, metaPagination } from 'utils/pagination';
+import { deleteImageMenu, uploadImageMenu } from 'src/utils/upload';
+import { calcTakeSkip, isNumeric, metaPagination } from 'src/utils/pagination';
 import { Prisma } from '@prisma/client';
 
 @Controller('menus')

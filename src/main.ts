@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { initializeApp } from 'firebase/app';
-import config from 'utils/config';
+import config from 'src/utils/config';
 
 async function bootstrap() {
   const port: string | number = process.env.PORT || 3000;

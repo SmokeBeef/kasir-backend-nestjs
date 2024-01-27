@@ -14,10 +14,10 @@ import { PemesananService } from './pemesanan.service';
 import { CreatePemesananDto } from './dto/create-pemesanan.dto';
 import { UpdatePemesananDto } from './dto/update-pemesanan.dto';
 import { MenuService } from '../menu/menu.service';
-import wrapper from 'utils/wrapper';
+import wrapper from 'src/utils/wrapper';
 import { Request as Request, Response } from 'express';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { calcTakeSkip, isNumeric, metaPagination } from 'utils/pagination';
+import { calcTakeSkip, isNumeric, metaPagination } from 'src/utils/pagination';
 import { Prisma } from '@prisma/client';
 
 @Controller('pemesanan')

@@ -18,11 +18,11 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Request, Response } from 'express';
 
-import wrapper from 'utils/wrapper';
-import { deleteImageUser, uploadImageUser } from 'utils/upload';
+import wrapper from 'src/utils/wrapper';
+import { deleteImageUser, uploadImageUser } from 'src/utils/upload';
 import * as bcrypt from 'bcrypt';
 import { Prisma } from '@prisma/client';
-import { calcTakeSkip, isNumeric, metaPagination } from 'utils/pagination';
+import { calcTakeSkip, isNumeric, metaPagination } from 'src/utils/pagination';
 import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('users')
