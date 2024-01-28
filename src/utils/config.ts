@@ -12,7 +12,7 @@ export default {
     accessToken: {
       secretKey:
         '&%#*gbD&*rcH*TAc9BA(sdugA&*Sct*^AS%578yr7A%SRc7AUSc(&GVcb(ACSS',
-      expiresIn: '10s',
+      expiresIn: '300s',
     },
     refreshToken: {
       secretKey:
