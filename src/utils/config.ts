@@ -12,12 +12,13 @@ export default {
     accessToken: {
       secretKey:
         '&%#*gbD&*rcH*TAc9BA(sdugA&*Sct*^AS%578yr7A%SRc7AUSc(&GVcb(ACSS',
-      expiresIn: '1h',
+      expiresIn: '10s',
     },
     refreshToken: {
       secretKey:
         '(ASGf7b8n(ACa9hA_)Sd9UGBCSY9du0ADNU98aycn9yuHAIDUhcAIUHC*Ayd(A&cy9ycdY%^4f6%',
-      expiresIn: '7d',
+      expiresIn: '30d',
+      expiresInMs: 30 * 24 * 60 * 60 * 1000,
     },
   },
   cors: {

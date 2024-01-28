@@ -1,7 +1,7 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { LoginUserDto } from './dto/login-user';
 import wrapper from 'src/utils/wrapper';
 import * as bcrypt from 'bcrypt';
@@ -52,9 +52,22 @@ export class AuthController {
         expiresIn: config.jwt.accessToken.expiresIn,
       });
 
+      const refreshToken = await this.jwtService.signAsync(tokenPayload, {
+        secret: config.jwt.refreshToken.secretKey,
+        expiresIn: config.jwt.refreshToken.expiresIn,
+      });
+
+      const expires = new Date();
+      expires.setMinutes(expires.getMinutes() + 5);
+
+      res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        maxAge: config.jwt.refreshToken.expiresInMs,
+      });
+
       return wrapper.response(
         res,
-        { token, ...findUser },
+        { token, ...findUser, expires: expires.getTime() },
         'Success Login',
         200,
       );
@@ -62,6 +75,45 @@ export class AuthController {
       console.log(error);
 
       return wrapper.response(res, null, 'internal error', 500);
+    }
+  }
+
+  @Get('/refresh')
+  async refreshToken(@Req() req: Request, @Res() res: Response) {
+    const refreshToken = req.cookies['refreshToken'];
+
+    if (!refreshToken) {
+      wrapper.response(
+        res,
+        null,
+        "can't get new token, refreshToken not found",
+        401,
+      );
+    }
+
+    try {
+      const payload = await this.jwtService.verifyAsync(refreshToken, {
+        secret: config.jwt.refreshToken.secretKey,
+      });
+
+      const accessToken = await this.jwtService.signAsync(
+        {
+          ...payload,
+          ttl: Date.now(),
+        },
+        { secret: config.jwt.accessToken.secretKey },
+      );
+
+      return wrapper.response(
+        res,
+        { token: accessToken },
+        'success get new token',
+        200,
+      );
+    } catch (error) {
+      console.log(error.message);
+
+      return wrapper.response(res, null, 'failed, token not sign', 401);
     }
   }
 }

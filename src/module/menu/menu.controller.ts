@@ -10,6 +10,7 @@ import {
   UseInterceptors,
   UploadedFile,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 import { MenuService } from './menu.service';
 import { CreateMenuDto } from './dto/create-menu.dto';
@@ -20,8 +21,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { deleteImageMenu, uploadImageMenu } from 'src/utils/upload';
 import { calcTakeSkip, isNumeric, metaPagination } from 'src/utils/pagination';
 import { Prisma } from '@prisma/client';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('menus')
+@UseGuards(AuthGuard)
 export class MenuController {
   constructor(private readonly menuService: MenuService) {}
 
