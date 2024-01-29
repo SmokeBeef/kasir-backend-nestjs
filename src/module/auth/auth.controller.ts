@@ -103,10 +103,12 @@ export class AuthController {
         },
         { secret: config.jwt.accessToken.secretKey },
       );
+      const expires = new Date();
+      expires.setMinutes(expires.getMinutes() + 5);
 
       return wrapper.response(
         res,
-        { token: accessToken },
+        { token: accessToken, expires: expires.getDate() },
         'success get new token',
         200,
       );
