@@ -101,6 +101,7 @@ export class PemesananController {
     const option: Prisma.pemesananFindManyArgs = {
       skip,
       take,
+      orderBy: { id: 'desc' },
     };
 
     const getAll = this.pemesananService.findAll(option);

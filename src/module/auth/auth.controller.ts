@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Req, Res } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { Request, Response } from 'express';
@@ -116,6 +116,16 @@ export class AuthController {
       console.log(error.message);
 
       return wrapper.response(res, null, 'failed, token not sign', 401);
+    }
+  }
+
+  @Delete('logout')
+  async logout(@Req() req: Request, @Res() res: Response) {
+    try {
+      res.clearCookie('refreshToken');
+      return wrapper.response(res, null, 'success login', 200);
+    } catch (error) {
+      return wrapper.response(res, null, 'internal error', 500);
     }
   }
 }
